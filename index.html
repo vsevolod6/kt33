@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Мой блог</title>
+  <style>
+    :root {
+      --primary-color: #3498db;
+      --secondary-color: #2ecc71;
+      --dark-color: #2c3e50;
+      --light-color: #ecf0f1;
+      --accent-color: #e74c3c;
+      --text-color: #333;
+      --text-light: #777;
+      --spacing: 1rem;
+      --spacing-sm: calc(var(--spacing) * 0.5);
+      --spacing-lg: calc(var(--spacing) * 2);
+      --border-radius: 4px;
+      --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: #f9f9f9;
+      padding-bottom: var(--spacing-lg);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+      color: white;
+      padding: var(--spacing-lg);
+      text-align: center;
+      margin-bottom: var(--spacing-lg);
+      box-shadow: var(--box-shadow);
+      position: relative;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: var(--spacing);
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: var(--spacing-lg);
+      margin-top: var(--spacing);
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: var(--spacing-sm) var(--spacing);
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    nav a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background-color: white;
+      transition: var(--transition);
+      transform: translateX(-50%);
+    }
+
+    nav a:hover::after {
+      width: 80%;
+    }
+
+    .burger {
+      display: none;
+      font-size: 2rem;
+      cursor: pointer;
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: white;
+    }
+
+    .nav-links {
+      display: flex;
+    }
+
+    .nav-links.active {
+      flex-direction: column;
+      gap: var(--spacing);
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--dark-color);
+      padding: var(--spacing);
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--spacing-lg);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--spacing);
+    }
+
+    @media (min-width: 768px) {
+      main {
+        grid-template-columns: 2fr 1fr;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      main {
+        grid-template-columns: 3fr 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
+      .burger {
+        display: block;
+      }
+      .nav-links {
+        display: none;
+      }
+      .nav-links.active {
+        display: flex;
+      }
+    }
+
+    section h2 {
+      color: var(--dark-color);
+      margin-bottom: var(--spacing);
+      padding-bottom: var(--spacing-sm);
+      border-bottom: 2px solid var(--primary-color);
+    }
+
+    article {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: var(--spacing);
+      margin-bottom: var(--spacing);
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    article:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    article header {
+      background: none;
+      color: var(--text-color);
+      padding: 0;
+      margin: 0 0 var(--spacing) 0;
+      text-align: left;
+      box-shadow: none;
+    }
+
+    article h3 {
+      color: var(--primary-color);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    article time {
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    article p {
+      margin-bottom: var(--spacing);
+    }
+
+    figure {
+      margin: var(--spacing) 0;
+    }
+
+    figure img {
+      width: 100%;
+      height: auto;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+    }
+
+    figure img:hover {
+      transform: scale(1.02);
+    }
+
+    figcaption {
+      font-style: italic;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin-top: var(--spacing-sm);
+    }
+
+    article footer {
+      border-top: 1px solid #eee;
+      padding-top: var(--spacing-sm);
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    aside {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: var(--spacing);
+      box-shadow: var(--box-shadow);
+      align-self: start;
+    }
+
+    aside h2 {
+      color: var(--dark-color);
+      margin-bottom: var(--spacing);
+      padding-bottom: var(--spacing-sm);
+      border-bottom: 2px solid var(--secondary-color);
+    }
+
+    details {
+      margin-top: var(--spacing);
+    }
+
+    summary {
+      cursor: pointer;
+      color: var(--primary-color);
+      font-weight: bold;
+      transition: var(--transition);
+    }
+
+    summary:hover {
+      color: var(--dark-color);
+    }
+
+    details p {
+      margin-top: var(--spacing-sm);
+      padding-left: var(--spacing);
+      border-left: 3px solid var(--secondary-color);
+    }
+
+    footer {
+      background: var(--dark-color);
+      color: white;
+      text-align: center;
+      padding: var(--spacing);
+      margin-top: var(--spacing-lg);
+    }
+
+    footer a {
+      color: var(--light-color);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    footer a:hover {
+      color: var(--primary-color);
+      text-decoration: underline;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+      z-index: 1000;
+    }
+
+    article::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 0;
+      background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+      border-radius: var(--border-radius) 0 0 var(--border-radius);
+      transition: var(--transition);
+    }
+
+    article:hover::before {
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Мой личный блог</h1>
+    <button class="burger">☰</button>
+    <nav class="nav-links">
+      <a href="#">Главная</a>
+      <a href="#">Обо мне</a>
+      <a href="#">Контакты</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Последние статьи</h2>
+
+      <article>
+        <header>
+          <h3>Как я начал изучать HTML</h3>
+          <time datetime="2025-09-01">1 сентября 2025</time>
+        </header>
+        <p>Сегодня я хочу рассказать о том, как я начал изучать HTML и почему семантика так важна...</p>
+        <footer>
+          <p>Автор: Сева</p>
+        </footer>
+      </article>
+
+      <article>
+        <header>
+          <h3>Моя поездка в горы</h3>
+          <time datetime="2025-08-20">20 августа 2025</time>
+        </header>
+        <figure>
+          <img src="mountains.jpg" srcset="mountains.jpg 1x, mountains@2x.jpg 2x" alt="Горы" loading="lazy">
+          <figcaption>Фото из моего путешествия</figcaption>
+        </figure>
+        <p>В этом посте я поделюсь впечатлениями от своей поездки в горы...</p>
+        <footer>
+          <p>Автор: Сева</p>
+        </footer>
+      </article>
+
+      <article>
+        <header>
+          <h3>Препроцессоры CSS: почему они важны</h3>
+          <time datetime="2025-08-15">15 августа 2025</time>
+        </header>
+        <p>В этой статье я расскажу о том, как использование препроцессоров...</p>
+        <footer>
+          <p>Автор: Сева</p>
+        </footer>
+      </article>
+    </section>
+
+    <aside>
+      <h2>Обо мне</h2>
+      <p>Привет! Меня зовут Сева. Я начинающий веб-разработчик...</p>
+      <details>
+        <summary>Мои интересы</summary>
+        <p>Программирование, путешествия, спорт и развлечения.</p>
+      </details>
+      <details class="mt-1">
+        <summary>Мои навыки</summary>
+        <p>HTML, CSS, JavaScript, React, Node.js и многое другое.</p>
+      </details>
+    </aside>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Сева. Все права защищены.</p>
+    <p><a href="mailto:example@mail.com">example@mail.com</a></p>
+  </footer>
+
+  <script>
+    const burger = document.querySelector('.burger');
+    const nav = document.querySelector('.nav-links');
+    burger.addEventListener('click', () => {
+      nav.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>
